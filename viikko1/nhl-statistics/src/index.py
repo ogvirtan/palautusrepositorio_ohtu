@@ -1,8 +1,9 @@
 from statistics_service import StatisticsService
-
+from player_reader import PlayerReader
 
 def main():
-    stats = StatisticsService()
+    plr_rdr = PlayerReader("https://studies.cs.helsinki.fi/nhlstats/2024-25/players.txt")
+    stats = StatisticsService(plr_rdr)
     philadelphia_flyers_players = stats.team("PHI")
     top_scorers = stats.top(10)
 
