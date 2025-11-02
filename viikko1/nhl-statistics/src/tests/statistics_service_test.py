@@ -1,5 +1,5 @@
 import unittest
-from statistics_service import StatisticsService
+from statistics_service import StatisticsService, SortBy
 from player import Player
 
 class PlayerReaderStub:
@@ -40,10 +40,25 @@ class TestStatisticsService(unittest.TestCase):
     def test_team_toimii_jos_haettava_ei_ole_olemassa(self):
         self.assertEqual(self.stats.search("DAL"), None)
 
-    def test_top_palauttaa_vain_parhaan_pelaajan_syotteella_0(self):
+    def test_top_palauttaa_vain_yhden_pelaajan_pisteiden_perusteella_arvolla_0(self):
         self.assertEqual(len(self.stats.top(0)), 1)
 
-    def test_top_jarjestaa_listan_oikein(self):
+    def test_top_palauttaa_oikean_pelaajan_pisteiden_perusteella_ilman_sortby_argumenttia(self):
+        pelaajat = self.stats.top(0)
+        self.assertEqual(pelaajat[0].name, "Gretzky")
+
+    def test_top_jarjestaa_listan_oikein_pelaajan_pisteiden_perusteella(self):
+        pelaajat = self.stats.top(1, SortBy.POINTS)
+        self.assertEqual([pelaaja.name for pelaaja in pelaajat], ["Gretzky", "Lemieux"])
+
+    def test_top_jarjestaa_listan_oikein_maalien_perusteella(self):
+        pelaajat = self.stats.top(1, SortBy.GOALS)
+        self.assertEqual([pelaaja.name for pelaaja in pelaajat], ["Lemieux", "Yzerman"])
+
+    def test_top_jarjestaa_listan_oikein_assistien_perusteella(self):
+        pelaajat = self.stats.top(1, SortBy.ASSISTS)
+        self.assertEqual([pelaaja.name for pelaaja in pelaajat], ["Gretzky", "Yzerman"])
+
+    def test_top_jarjestaa_listan_oikein_ilman_sortby_argumenttia(self):
         pelaajat = self.stats.top(2)
         self.assertAlmostEqual([pelaaja.name for pelaaja in pelaajat], ["Gretzky", "Lemieux", "Yzerman"])
-
