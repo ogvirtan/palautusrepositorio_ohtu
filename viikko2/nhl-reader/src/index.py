@@ -56,7 +56,7 @@ def nationality_loop(stats, reader, console, season):
         players_table(stats, nationality, console, season)
 
 
-def players_table(stats, nationality, console, season):# pylint: disable=too-many-statem
+def players_table(stats, nationality, console, season):# pylint: disable=too-many-state
     table = Table(show_footer=False)
     table_left = Align.left(table)
 
