@@ -26,6 +26,10 @@ Login Should Fail With Message
     Login Page Should Be Open
     Page Should Contain  ${message}
 
+Login With Nonexistent Username
+    Login Page Should Be Open
+    Page Should Contain  Username and password are required
+
 Set Username
     [Arguments]  ${username}
     Input Text  username  ${username}
