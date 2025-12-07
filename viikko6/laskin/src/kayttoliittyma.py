@@ -1,18 +1,46 @@
 from enum import Enum
 from tkinter import ttk, constants, StringVar
 
-
 class Komento(Enum):
     SUMMA = 1
     EROTUS = 2
     NOLLAUS = 3
     KUMOA = 4
 
+class Summa():
+    def __init__(self, sovelluslogiikka, lue):
+        self.sovelluslogiikka = sovelluslogiikka
+        self.lue = lue
+
+    def suorita(self):
+        self.sovelluslogiikka.plus(self.lue())
+
+class Erotus():
+    def __init__(self, sovelluslogiikka, lue):
+        self.sovelluslogiikka = sovelluslogiikka
+        self.lue = lue
+
+    def suorita(self):
+        self.sovelluslogiikka.miinus(self.lue())
+
+class Nollaus():
+    def __init__(self, sovelluslogiikka, lue):
+        self.sovelluslogiikka = sovelluslogiikka
+        self.lue = lue
+
+    def suorita(self):
+        self.sovelluslogiikka.nollaa()
 
 class Kayttoliittyma:
     def __init__(self, sovelluslogiikka, root):
         self._sovelluslogiikka = sovelluslogiikka
         self._root = root
+
+        self._komennot = {
+            Komento.SUMMA: Summa(sovelluslogiikka, self._lue_syote),
+            Komento.EROTUS: Erotus(sovelluslogiikka, self._lue_syote),
+            Komento.NOLLAUS: Nollaus(sovelluslogiikka, self._lue_syote),
+        }
 
     def kaynnista(self):
         self._arvo_var = StringVar()
@@ -54,22 +82,17 @@ class Kayttoliittyma:
         self._nollaus_painike.grid(row=2, column=2)
         self._kumoa_painike.grid(row=2, column=3)
 
-    def _suorita_komento(self, komento):
-        arvo = 0
-
+    def _lue_syote(self):
+        rval = 0
         try:
-            arvo = int(self._syote_kentta.get())
+            rval = int(self._syote_kentta.get())
         except Exception:
             pass
+        return rval
 
-        if komento == Komento.SUMMA:
-            self._sovelluslogiikka.plus(arvo)
-        elif komento == Komento.EROTUS:
-            self._sovelluslogiikka.miinus(arvo)
-        elif komento == Komento.NOLLAUS:
-            self._sovelluslogiikka.nollaa()
-        elif komento == Komento.KUMOA:
-            pass
+    def _suorita_komento(self, komento):
+        komento_olio = self._komennot[komento]
+        komento_olio.suorita()
 
         self._kumoa_painike["state"] = constants.NORMAL
 
