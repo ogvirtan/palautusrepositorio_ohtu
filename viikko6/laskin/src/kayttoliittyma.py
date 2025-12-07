@@ -8,39 +8,57 @@ class Komento(Enum):
     KUMOA = 4
 
 class Summa():
-    def __init__(self, sovelluslogiikka, lue):
+    def __init__(self, sovelluslogiikka, lue, arvot):
         self.sovelluslogiikka = sovelluslogiikka
         self.lue = lue
+        self.arvot = arvot
 
     def suorita(self):
         self.sovelluslogiikka.plus(self.lue())
+        self.arvot.append(self.sovelluslogiikka.arvo())
 
 class Erotus():
-    def __init__(self, sovelluslogiikka, lue):
+    def __init__(self, sovelluslogiikka, lue, arvot):
         self.sovelluslogiikka = sovelluslogiikka
         self.lue = lue
+        self.arvot = arvot
 
     def suorita(self):
         self.sovelluslogiikka.miinus(self.lue())
+        self.arvot.append(self.sovelluslogiikka.arvo())
 
 class Nollaus():
-    def __init__(self, sovelluslogiikka, lue):
+    def __init__(self, sovelluslogiikka, lue, arvot):
         self.sovelluslogiikka = sovelluslogiikka
         self.lue = lue
+        self.arvot = arvot
 
     def suorita(self):
         self.sovelluslogiikka.nollaa()
+        self.arvot.append(self.sovelluslogiikka.arvo())
+    
+class Kumous():
+    def __init__(self, sovelluslogiikka, arvot):
+        self.sovelluslogiikka = sovelluslogiikka
+        self.arvot = arvot
+
+    def suorita(self):
+        self.arvot.pop()
+        self.sovelluslogiikka.aseta_arvo(self.arvot[-1])
 
 class Kayttoliittyma:
     def __init__(self, sovelluslogiikka, root):
         self._sovelluslogiikka = sovelluslogiikka
         self._root = root
+        self._arvolista = [0]
 
         self._komennot = {
-            Komento.SUMMA: Summa(sovelluslogiikka, self._lue_syote),
-            Komento.EROTUS: Erotus(sovelluslogiikka, self._lue_syote),
-            Komento.NOLLAUS: Nollaus(sovelluslogiikka, self._lue_syote),
+            Komento.SUMMA: Summa(sovelluslogiikka, self._lue_syote, self._arvolista),
+            Komento.EROTUS: Erotus(sovelluslogiikka, self._lue_syote, self._arvolista),
+            Komento.NOLLAUS: Nollaus(sovelluslogiikka, self._lue_syote, self._arvolista),
+            Komento.KUMOA: Kumous(sovelluslogiikka, self._arvolista)
         }
+
 
     def kaynnista(self):
         self._arvo_var = StringVar()
@@ -98,6 +116,8 @@ class Kayttoliittyma:
 
         if self._sovelluslogiikka.arvo() == 0:
             self._nollaus_painike["state"] = constants.DISABLED
+        if len(self._arvolista) == 1:
+            self._kumoa_painike["state"] = constants.DISABLED
         else:
             self._nollaus_painike["state"] = constants.NORMAL
 
