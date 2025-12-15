@@ -1,0 +1,28 @@
+body { font-family: system-ui, sans-serif; padding: 1rem; }
+h1 { margin-bottom: 0.5rem }
+.status { background: #eef; padding: 0.5rem; margin-bottom: 0.5rem }
+.history { margin-bottom: 1rem }
+button { padding: 0.4rem 0.8rem }
+
+/* Layout for game board */
+.board { position: relative; min-height: 260px; margin-bottom: 1rem; border-radius: 8px; overflow: hidden; background: linear-gradient(180deg,#fafafa,#f4f7fb); }
+.board .bg-left, .board .bg-right {
+	position: absolute; top: 10px; width: 48%; height: 240px; background-repeat: no-repeat; background-position: center; background-size: contain; opacity: 0.12; pointer-events: none;
+}
+.board .bg-left { left: 0; transform: translateX(5%); }
+.board .bg-right { right: 0; transform: translateX(-5%); }
+
+.controls { position: relative; z-index: 2; padding: 0.6rem; }
+
+.history ul { list-style: none; padding: 0; margin: 0; max-height: 160px; overflow:auto }
+.history li { padding: 0.25rem 0.5rem; border-bottom: 1px solid #eee; display:flex; gap:0.5rem; align-items:center }
+.move-icon { width:36px; height:36px; background-size:contain; background-repeat:no-repeat; background-position:center; opacity:0.95 }
+.move-eka { filter: drop-shadow(0 1px 0 rgba(0,0,0,0.08)); }
+.move-toka { transform: scaleX(-1); filter: drop-shadow(0 1px 0 rgba(0,0,0,0.06)); }
+
+.finished { background: linear-gradient(90deg,#f0fff4,#f4fff8); padding:0.6rem; border:1px solid #dfe; border-radius:6px }
+
+/* ensure history remains visible and latest move emphasized */
+.history ul { scroll-behavior: smooth }
+.history li:last-child { background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(240,250,255,0.04)); }
+.history li .move-icon { width:44px; height:44px }

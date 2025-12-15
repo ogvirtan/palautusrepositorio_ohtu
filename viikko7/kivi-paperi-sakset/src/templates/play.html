@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Kivi Paperi Sakset - Peli</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <h1>Peli</h1>
+
+    <div class="board">
+      {% if history %}
+        {% set last = history[-1] %}
+        <div class="bg-left" style="background-image: url('/static/images/{{ last[0] }}.svg')"></div>
+        <div class="bg-right" style="background-image: url('/static/images/{{ last[1] }}.svg')"></div>
+      {% else %}
+        <div class="bg-left"></div>
+        <div class="bg-right"></div>
+      {% endif %}
+
+      <div class="controls">
+        <div class="status">
+          <p>{{ tuomari }}</p>
+          {% if finished %}
+          <p class="finished"><strong>Peli päättynyt: {{ winner }}</strong></p>
+          {% endif %}
+        </div>
+
+        <div class="history">
+          <h3>Siirrot</h3>
+          <ul>
+            {% for e,t in history %}
+              <li>
+                <span class="move-icon move-eka" style="background-image:url('/static/images/{{ e }}.svg')" title="Ensimmäinen: {{ e }}"></span>
+                <span style="flex:1">{{ loop.index }}.</span>
+                <span class="move-icon move-toka" style="background-image:url('/static/images/{{ t }}.svg')" title="Toinen: {{ t }}"></span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        {% if not finished %}
+          {% if need_second %}
+          <form action="/move/{{ game_id }}" method="post">
+            <input type="hidden" name="move" value="{{ first_move }}">
+            <label>Toisen pelaajan siirto: <input name="second_move"></label>
+            <button type="submit">Lähetä</button>
+          </form>
+          {% else %}
+          <form action="/move/{{ game_id }}" method="post">
+            <label>Valitse siirto:
+              <select name="move">
+                <option value="k">k (kivi)</option>
+                <option value="p">p (paperi)</option>
+                <option value="s">s (sakset)</option>
+              </select>
+            </label>
+            <button type="submit">Pelaa</button>
+          </form>
+          {% endif %}
+        {% else %}
+          <p>Peli on päättynyt. <a href="/">Aloita uusi peli</a></p>
+        {% endif %}
+      </div>
+    </div>
+
+    <p><a href="/">Takaisin aloitukseen</a></p>
+  </body>
+  <script>
+    // scroll history to latest move and focus second-player input when needed
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        const history = document.querySelector('.history');
+        if (history) {
+          const ul = history.querySelector('ul');
+          if (ul) ul.scrollTop = ul.scrollHeight;
+        }
+
+        // focus second player input if visible
+        const second = document.querySelector('input[name="second_move"]');
+        if (second) second.focus();
+      } catch (e) {
+        console.warn('scroll/focus failed', e);
+      }
+    });
+  </script>
+</html>

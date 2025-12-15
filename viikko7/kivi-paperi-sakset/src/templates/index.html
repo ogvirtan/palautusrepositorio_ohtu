@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Kivi Paperi Sakset - Valitse pelimuoto</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <h1>Kivi Paperi Sakset</h1>
+    <form action="/new" method="post">
+      <label><input type="radio" name="mode" value="a" checked> Pelaaja vs Pelaaja</label><br>
+      <label><input type="radio" name="mode" value="b"> Pelaaja vs Tekoäly</label><br>
+      <label><input type="radio" name="mode" value="c"> Pelaaja vs Parannettu tekoäly</label><br>
+      <button type="submit">Aloita peli</button>
+    </form>
+  </body>
+</html>

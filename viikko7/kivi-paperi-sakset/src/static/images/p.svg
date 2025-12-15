@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <g stroke="#c7a578" stroke-width="2" fill="#fff">
+    <!-- improved paper with textured lines -->
+    <rect x="38" y="28" width="124" height="144" rx="10" ry="10" fill="#fff" stroke="#e0d2bd"/>
+    <path d="M50 52 L150 52" stroke="#f0e0d0" stroke-width="3"/>
+    <path d="M50 72 L150 72" stroke="#f6eaea" stroke-width="2"/>
+    <path d="M50 92 L150 92" stroke="#f6eaea" stroke-width="2"/>
+    <path d="M50 112 L150 112" stroke="#f6eaea" stroke-width="2"/>
+    <path d="M50 132 L150 132" stroke="#f6eaea" stroke-width="2"/>
+    <ellipse cx="100" cy="160" rx="36" ry="8" fill="rgba(0,0,0,0.04)"/>
+  </g>
+</svg>
