@@ -17,7 +17,7 @@ class Tuomari:
     def __str__(self):
         return f"Pelitilanne: {self.ekan_pisteet} - {self.tokan_pisteet}\nTasapelit: {self.tasapelit}"
 
-    def onko_loppu(self, tavoite=5):
+    def onko_loppu(self, tavoite=3):
         """Palauttaa True jos jompikumpi pelaajista saavuttanut `tavoite` pistettä."""
         return self.ekan_pisteet >= tavoite or self.tokan_pisteet >= tavoite
 

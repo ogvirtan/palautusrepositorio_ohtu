@@ -81,10 +81,10 @@ def move(game_id):
     state["tuomari"].kirjaa_siirto(eka, toka)
     state["history"].append((eka, toka))
 
-    # Check end condition: first to 5 points wins
-    if state["tuomari"].onko_loppu(5):
+    # Check end condition: first to 3 points wins
+    if state["tuomari"].onko_loppu(3):
         state["finished"] = True
-        v = state["tuomari"].voittaja(5)
+        v = state["tuomari"].voittaja(3)
         if v == 1:
             state["winner"] = "Ensimmäinen pelaaja"
         elif v == 2:
